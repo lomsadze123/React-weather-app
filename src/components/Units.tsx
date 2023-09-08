@@ -22,4 +22,8 @@ const Div = styled.div`
     color: #000;
     font-size: 1.6rem;
   }
+
+  @media (min-width: 476px) {
+    justify-content: flex-end;
+  }
 `;

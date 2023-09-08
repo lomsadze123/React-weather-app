@@ -1,14 +1,24 @@
 import styled from "styled-components";
 import Sun from "../assets/01d.svg";
 
-const Weather = () => {
+interface Types {
+  name: string;
+  country: string;
+  description: string;
+  temp: number;
+  feels_like: number;
+}
+
+const Weather = ({ name, country, description, temp, feels_like }: Types) => {
   return (
     <Header>
-      <h1>Rustavi, GE</h1>
-      <p>clear sky</p>
+      <h1>
+        {name}, {country}
+      </h1>
+      <p>{description}</p>
       <img src={Sun} alt="sun" />
-      <h2>30°C</h2>
-      <p>Feels like 31°C</p>
+      <h2>{Math.round(temp)}°C</h2>
+      <p>Feels like {Math.round(feels_like)}°C</p>
     </Header>
   );
 };
@@ -37,5 +47,14 @@ const Header = styled.header`
   h2 + p {
     font-size: 1.6rem;
     margin: 0;
+  }
+
+  @media (min-width: 601px) {
+    border-radius: 3rem 3rem 0 0;
+  }
+
+  @media (min-width: 951px) {
+    flex-grow: 1;
+    border-radius: 3rem 0 0 3rem;
   }
 `;

@@ -6,30 +6,71 @@ import sunrise from "../assets/sunrise.png";
 import sunset from "../assets/sunset.png";
 import wind from "../assets/wind.png";
 
-const WeatherFeatures = () => {
+interface Types {
+  humidityNumber: number;
+  windSpeed: number;
+  windDirection: number;
+  visibility: number;
+  rise: number;
+  set: number;
+}
+
+const WeatherFeatures = ({
+  humidityNumber,
+  windSpeed,
+  windDirection,
+  visibility,
+  rise,
+  set,
+}: Types) => {
+  const compassSector = [
+    "N",
+    "NNE",
+    "NE",
+    "ENE",
+    "E",
+    "ESE",
+    "SE",
+    "SSE",
+    "S",
+    "SSW",
+    "SW",
+    "WSW",
+    "W",
+    "WNW",
+    "NW",
+    "NNW",
+    "N",
+  ];
+  const newDirection = compassSector[Math.floor(windDirection / 22.5)];
+
   return (
     <MainDiv>
       <FeaturesComponent
         title="Humidity"
         img={humidity}
-        feature="48"
+        feature={humidityNumber}
         unit="%"
       />
       <FeaturesComponent
         title="Wind speed"
         img={wind}
-        feature="9.77"
+        feature={windSpeed}
         unit="m/s"
       />
-      <FeaturesComponent title="Wind direction" img={compass} feature="NW" />
+      <FeaturesComponent
+        title="Wind direction"
+        img={compass}
+        feature={newDirection}
+      />
       <FeaturesComponent
         title="Visibility"
         img={binocular}
-        feature="10.0"
+        feature={visibility}
         unit="km"
       />
-      <FeaturesComponent title="Sunrise" img={sunrise} feature="6:30" />
-      <FeaturesComponent title="Sunset" img={sunset} feature="19:26" />
+      <FeaturesComponent title="Sunrise" img={sunrise} feature={rise} />
+      <FeaturesComponent title="Sunset" img={sunset} feature={set} />
     </MainDiv>
   );
 };
@@ -37,7 +78,7 @@ const WeatherFeatures = () => {
 interface Weather {
   title: string;
   img: string;
-  feature: string;
+  feature: number | string;
   unit?: string;
 }
 
@@ -62,6 +103,19 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media (min-width: 476px) {
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  @media (min-width: 951px) {
+    max-width: 74rem;
+    div img {
+      width: 52%;
+    }
+  }
 `;
 
 const Div = styled.div`
@@ -83,5 +137,22 @@ const Div = styled.div`
   .flex {
     display: flex;
     justify-content: space-between;
+  }
+
+  @media (min-width: 476px) {
+    width: 47%;
+    img {
+      width: 40%;
+    }
+  }
+
+  @media (min-width: 601px) {
+    width: 30%;
+    h2 {
+      font-size: 3.042rem;
+    }
+    img {
+      width: 43%;
+    }
   }
 `;
