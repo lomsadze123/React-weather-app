@@ -1,22 +1,5 @@
 import styled from "styled-components";
-import d1 from "../assets/01d.svg";
-import d2 from "../assets/02d.svg";
-import d3 from "../assets/03d.svg";
-import d4 from "../assets/04d.svg";
-import d9 from "../assets/09d.svg";
-import d10 from "../assets/10d.svg";
-import d11 from "../assets/11d.svg";
-import d13 from "../assets/13d.svg";
-import d50 from "../assets/50d.svg";
-import n1 from "../assets/01n.svg";
-import n2 from "../assets/02n.svg";
-import n3 from "../assets/03n.svg";
-import n4 from "../assets/04n.svg";
-import n9 from "../assets/09n.svg";
-import n10 from "../assets/10n.svg";
-import n11 from "../assets/11n.svg";
-import n13 from "../assets/13n.svg";
-import n50 from "../assets/50n.svg";
+import weatherIcons from "./Icons";
 
 interface Types {
   name: string;
@@ -37,13 +20,14 @@ const Weather = ({
   image,
   unit,
 }: Types) => {
+  const weatherIcon = weatherIcons[image];
   return (
     <Header>
       <h1>
         {name}, {country}
       </h1>
       <p>{description}</p>
-      <img src={`/src/assets/${image}.svg`} alt="sun" />
+      <img src={weatherIcon} alt="sun" />
       <h2>
         {Math.round(temp)}°{unit === "metric" ? "C" : "F"}
       </h2>
