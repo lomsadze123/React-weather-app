@@ -1,24 +1,25 @@
 import styled from "styled-components";
 
-export const Dates = ({ time }: { time: number }) => {
+const Dates = ({ time, unit }: { time: number; unit: string }) => {
   const newDate = new Date(time * 1000);
-  const formatTime = `${newDate.getHours()}:${newDate.getMinutes()}`;
+  const bool = unit === "metric";
 
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: !bool,
   };
   const formatDate = newDate.toLocaleDateString(undefined, options);
 
   return (
     <Div>
-      <h2>
-        {formatDate}, {formatTime}
-      </h2>
+      <h2>{formatDate}</h2>
     </Div>
   );
 };
 
-export default Date;
+export default Dates;
 
 const Div = styled.div`
   text-align: center;

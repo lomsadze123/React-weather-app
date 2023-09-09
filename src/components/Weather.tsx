@@ -8,6 +8,7 @@ interface Types {
   temp: number;
   feels_like: number;
   image: string;
+  unit: string;
 }
 
 const Weather = ({
@@ -17,6 +18,7 @@ const Weather = ({
   temp,
   feels_like,
   image,
+  unit,
 }: Types) => {
   return (
     <Header>
@@ -25,8 +27,12 @@ const Weather = ({
       </h1>
       <p>{description}</p>
       <img src={`/src/assets/${image}.svg`} alt="sun" />
-      <h2>{Math.round(temp)}°C</h2>
-      <p>Feels like {Math.round(feels_like)}°C</p>
+      <h2>
+        {Math.round(temp)}°{unit === "metric" ? "C" : "F"}
+      </h2>
+      <p>
+        Feels like {Math.round(feels_like)}°{unit === "metric" ? "C" : "F"}
+      </p>
     </Header>
   );
 };

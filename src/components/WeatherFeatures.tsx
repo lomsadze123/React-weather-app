@@ -13,6 +13,7 @@ interface Types {
   visibility: string;
   rise: number;
   set: number;
+  unit: string;
 }
 
 const WeatherFeatures = ({
@@ -22,6 +23,7 @@ const WeatherFeatures = ({
   visibility,
   rise,
   set,
+  unit,
 }: Types) => {
   const compassSector = [
     "N",
@@ -50,6 +52,10 @@ const WeatherFeatures = ({
   const newSet = new Date(set * 1000);
   const setDate = `${newSet.getHours()}:${newSet.getMinutes()}`;
 
+  const [hours, minutes] = setDate.split(":");
+  const formattedHour = (parseInt(hours) % 12 || 12).toString();
+  const formatTime = `${formattedHour}:${minutes}`;
+
   return (
     <MainDiv>
       <FeaturesComponent
@@ -62,7 +68,7 @@ const WeatherFeatures = ({
         title="Wind speed"
         img={wind}
         feature={windSpeed}
-        unit="m/s"
+        unit={unit === "metric" ? "m/s" : "m/h"}
       />
       <FeaturesComponent
         title="Wind direction"
@@ -72,11 +78,25 @@ const WeatherFeatures = ({
       <FeaturesComponent
         title="Visibility"
         img={binocular}
-        feature={visibility}
-        unit="km"
+        feature={
+          unit === "metric"
+            ? visibility
+            : (parseFloat(visibility) / 1.60934).toFixed(1)
+        }
+        unit={unit === "metric" ? "km" : "miles"}
       />
-      <FeaturesComponent title="Sunrise" img={sunrise} feature={riseDate} />
-      <FeaturesComponent title="Sunset" img={sunset} feature={setDate} />
+      <FeaturesComponent
+        title="Sunrise"
+        img={sunrise}
+        feature={riseDate}
+        unit={unit === "metric" ? "" : "AM"}
+      />
+      <FeaturesComponent
+        title="Sunset"
+        img={sunset}
+        feature={unit === "metric" ? setDate : formatTime}
+        unit={unit === "metric" ? "" : "PM"}
+      />
     </MainDiv>
   );
 };
