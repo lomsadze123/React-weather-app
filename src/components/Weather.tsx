@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Sun from "../assets/01d.svg";
+// import Sun from "../assets/01d.svg";
 
 interface Types {
   name: string;
@@ -7,16 +7,24 @@ interface Types {
   description: string;
   temp: number;
   feels_like: number;
+  image: string;
 }
 
-const Weather = ({ name, country, description, temp, feels_like }: Types) => {
+const Weather = ({
+  name,
+  country,
+  description,
+  temp,
+  feels_like,
+  image,
+}: Types) => {
   return (
     <Header>
       <h1>
         {name}, {country}
       </h1>
       <p>{description}</p>
-      <img src={Sun} alt="sun" />
+      <img src={`/src/assets/${image}.svg`} alt="sun" />
       <h2>{Math.round(temp)}°C</h2>
       <p>Feels like {Math.round(feels_like)}°C</p>
     </Header>

@@ -1,9 +1,19 @@
 import styled from "styled-components";
 
-export const Date = () => {
+export const Dates = ({ time }: { time: number }) => {
+  const newDate = new Date(time * 1000);
+  const formatTime = `${newDate.getHours()}:${newDate.getMinutes()}`;
+
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+  };
+  const formatDate = newDate.toLocaleDateString(undefined, options);
+
   return (
     <Div>
-      <h2>Wednesday, 18:59</h2>
+      <h2>
+        {formatDate}, {formatTime}
+      </h2>
     </Div>
   );
 };

@@ -1,18 +1,23 @@
 import styled from "styled-components";
 import Weather from "./Weather";
-import Date from "./Date";
+import { Dates } from "./Date";
 import WeatherFeatures from "./WeatherFeatures";
-import Units from "./Units";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DATA from "./ForTypes";
+import Units from "./Units";
 
 type DATATypes = typeof DATA;
 
 const MainInput = () => {
   const [input, setInput] = useState<DATATypes | null>(null);
+  const [unit, setUnit] = useState<string>("metric");
 
-  const weatherAPI = async (city = "tbilisi", unit = "metric") => {
+  const switchFunction = (newUnit: string) => {
+    setUnit(newUnit);
+  };
+
+  const weatherAPI = async (city = "tbilisi") => {
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bfd0148b33115682f5dd67eaad4292b1&units=${unit}`
@@ -26,7 +31,7 @@ const MainInput = () => {
 
   useEffect(() => {
     weatherAPI();
-  }, []);
+  }, [unit]);
 
   return (
     <Div>
@@ -36,10 +41,11 @@ const MainInput = () => {
         description={input?.weather[0].description ?? ""}
         temp={input?.main.temp ?? 0}
         feels_like={input?.main.feels_like ?? 0}
+        image={input?.weather[0].icon ?? ""}
       />
       <div className="padding">
         <div className="vertical">
-          <Date />
+          <Dates time={input?.dt ?? 0} />
           <form>
             <input type="text" placeholder="Search a city..." />
           </form>
@@ -48,11 +54,13 @@ const MainInput = () => {
           humidityNumber={input?.main.humidity ?? 0}
           windSpeed={input?.wind.speed ?? 0}
           windDirection={input?.wind.deg ?? 0}
-          visibility={(input && input?.visibility / 1000) ?? 0}
+          visibility={
+            input !== null ? (input.visibility / 1000).toFixed(1) : ""
+          }
           rise={input?.sys.sunrise ?? 0}
           set={input?.sys.sunset ?? 0}
         />
-        <Units />
+        <Units newUnit={unit} setUnit={switchFunction} />
       </div>
     </Div>
   );

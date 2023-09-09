@@ -1,10 +1,23 @@
 import { styled } from "styled-components";
 
-const Units = () => {
+const Units = ({
+  newUnit,
+  setUnit,
+}: {
+  newUnit: string;
+  setUnit: (newUnit: string) => void;
+}) => {
   return (
     <Div>
-      <button>Metric System</button>
-      <button>Imperial System</button>
+      <Button color={newUnit === "metric"} onClick={() => setUnit("metric")}>
+        Metric System
+      </Button>
+      <Button
+        color={newUnit === "imperial"}
+        onClick={() => setUnit("imperial")}
+      >
+        Imperial System
+      </Button>
     </Div>
   );
 };
@@ -19,11 +32,18 @@ const Div = styled.div`
   button {
     border: 0;
     background-color: transparent;
-    color: #000;
     font-size: 1.6rem;
   }
 
   @media (min-width: 476px) {
     justify-content: flex-end;
+  }
+`;
+
+const Button = styled.button<{ color: boolean }>`
+  color: ${(props) => (props.color ? "green" : "#000")};
+
+  @media (min-width: 951px) {
+    cursor: pointer;
   }
 `;

@@ -10,7 +10,7 @@ interface Types {
   humidityNumber: number;
   windSpeed: number;
   windDirection: number;
-  visibility: number;
+  visibility: string;
   rise: number;
   set: number;
 }
@@ -44,6 +44,12 @@ const WeatherFeatures = ({
   ];
   const newDirection = compassSector[Math.floor(windDirection / 22.5)];
 
+  const newRise = new Date(rise * 1000);
+  const riseDate = `${newRise.getHours()}:${newRise.getMinutes()}`;
+
+  const newSet = new Date(set * 1000);
+  const setDate = `${newSet.getHours()}:${newSet.getMinutes()}`;
+
   return (
     <MainDiv>
       <FeaturesComponent
@@ -69,8 +75,8 @@ const WeatherFeatures = ({
         feature={visibility}
         unit="km"
       />
-      <FeaturesComponent title="Sunrise" img={sunrise} feature={rise} />
-      <FeaturesComponent title="Sunset" img={sunset} feature={set} />
+      <FeaturesComponent title="Sunrise" img={sunrise} feature={riseDate} />
+      <FeaturesComponent title="Sunset" img={sunset} feature={setDate} />
     </MainDiv>
   );
 };
